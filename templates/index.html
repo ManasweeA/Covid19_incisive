@@ -1,0 +1,152 @@
+{% load static %}
+{% load plotly_dash %}
+<!DOCTYPE html>
+<html style="scroll-behavior: smooth;">
+<head>
+	<title>Covid19 Incisive</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-x.y.z.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-x.y.z.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-x.y.z.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-x.y.z.min.js"></script>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+
+  
+
+  
+</head>
+<body>
+	<header class="text-gray-700 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <img src="static/images/icon.jpg" height="70px" width="70px" style="border-radius: 50%;">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      <span class="ml-3 text-xl">Covid19-Incisive</span>
+    </a>
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+      <a class="mr-5 hover:text-gray-900" href="#home">Home</a>
+      <a class="mr-5 hover:text-gray-900" href="#your_state">Your State</a>
+      <a class="mr-5 hover:text-gray-900" href="#all_states">All States</a>
+      <a class="mr-5 hover:text-gray-900" href="#visualization">Visualization</a>
+    </nav>
+    <form action="https://github.com/safir72347/covid19-smart-prediction" target="_blank">
+    <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Prediction
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </button>
+</form>
+  </div>
+</header>
+
+
+<section class="text-gray-700 body-font overflow-hidden" id="home">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="static/images/covid2.jpg">
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">Covid19-Incisive</h1>
+
+        <p class="leading-relaxed">Covid19-incisive is a web application that provides information about Corona Cases in the Country and also gives
+        the cases at your location by tracking your IP. This also visualises the data. The next version is a dexterous Python application that predicts the
+    end of Coronavirus cases in the states and in the country.</p>
+        
+        <div class="flex">
+          <span class="title-font font-small text-2xl ">To go to predictive analysis project, Click <a href="#" style="color: red;"><b>here.</b></a></span>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="text-gray-700 body-font overflow-hidden" id="your_state">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+        
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">Covid19 cases near you</h1>
+        <div class="flex mb-4">
+          <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">Location</a>
+          
+        </div>
+        <p class="leading-relaxed mb-4">
+        	Your IP address is : <b style="color: #8830F7;"> {{ location_details.ip }} </b>
+        </p>
+        <p>
+        	Your Location is : <b style="color: #8830F7;"> {{ location_details.city }} {{ location_details.postal }}, {{ location_details.state }}, {{ location_details.country }} </b>
+        </p>
+        <p>
+        	Cases Total : <b style="color: #1288F9"> {{ location_cases.state_total }} </b>, Cured : <b style="color: #13DE0C">{{ location_cases.state_cured }}</b>, Deaths : <b style="color: red;">{{ location_cases.state_death }}</b>, OnGoing : <b style="color: #F91238"> {{ location_cases.state_ongoing }}</b>
+        </p>
+        <p>
+        	<b style="color: black;">Note : </b> The IP is default. To get the real time IP, host the site and remove the internal IP definition on line 38 of views.py
+        </p>
+        
+      </div>
+      <img alt="ecommerce" class="lg:w-1/2 object-cover object-center" src="static/images/location3.jpg">
+    </div>
+  </div>
+</section>
+
+
+
+<section class="text-gray-700 body-font" id="all_states">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">All Indian States</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">All the data below is being scraped live from <a href="https://www.mygov.in/corona-data/covid19-statewise-status/" target="_blank"><b style="color: red;"> https://www.mygov.in/corona-data/covid19-statewise-status/ </b> </a></p>
+    {% for i in texts %}
+      <p>{{ i }}</p>
+    {% endfor %}
+    </div>
+    <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+      <table class="table-auto w-full text-left whitespace-no-wrap">
+        <thead>
+          <tr>
+     		<th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">State</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Total</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Cured</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Deaths</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">On Going</th>
+          </tr>
+        </thead>
+        <tbody>
+        	{% for i in state_data %}
+          <tr>
+            <td class="px-4 py-3">{{ i.state_name }}</td>
+            <td class="px-4 py-3">{{ i.state_total }}</td>
+            <td class="px-4 py-3">{{ i.state_cured }}</td>
+            <td class="px-4 py-3">{{ i.state_death }}</td>
+            <td class="px-4 py-3">{{ i.state_ongoing }}</td>
+          </tr>
+          	{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+</section>
+
+<div id="visualization">
+  {{ plot1 | safe }}
+</div>
+
+<div style="height: 100%; width: 100%;">
+
+{{ plot | safe }}
+
+</div>
+
+<div style="height: 100%; width: 100%;">
+
+  {{ plot2 | safe }}
+  
+  </div>
+
+</body>
+</html>
